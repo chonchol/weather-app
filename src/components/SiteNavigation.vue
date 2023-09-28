@@ -11,7 +11,7 @@
                 <i class="fa-solid fa-circle-info text-xl hover:bg-weather-secondary duration-150 cursor-pointer" @click="toggleModal"></i>
                 <i class="fa-solid fa-plus text-xl duration-150 cursor-pointer"></i>
             </div>
-            <BaseModal :modalActive = "modalActive">
+            <BaseModal :modalActive = "modalActive" @close-modal="toggleModal">
                 <div class="text-black w-500 p-4 rounded">
                     <h4 class="text-2xl mb-1">About:</h4>
                     <p class="mb-4">The Local Weather allows you to track the current and future weather of cities of your choosing.</p>
@@ -41,6 +41,7 @@
 
     const toggleModal = () => {
         modalActive.value = !modalActive.value;
+        console.log(modalActive.value)
     }
 </script>
 
