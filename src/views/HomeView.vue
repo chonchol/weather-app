@@ -4,7 +4,7 @@
       <input v-model="searchQuery" @input="getSearchResults" type="text" placeholder="Search for a city or state" class="py-2 px-1 w-full bg-transparent border-b focus:border-weather-secondary focus: outline-none focus:shadow-[0px_1px_0_0_#004E71]">
 
       <ul v-if="mapboxSearchResult" class="absolute bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]">
-        <li v-for="searchResult in mapboxSearchResult" :key="searchResult.id" class="py-2 cursor-pointer">
+        <li v-for="searchResult in mapboxSearchResult" :key="searchResult.id" @click="previewCity(searchResult)" class="py-2 cursor-pointer">
           {{ searchResult.place_name }}
         </li>
       </ul>
@@ -16,6 +16,24 @@
 // import { VueElement } from 'vue';
 import { ref } from "vue";
 import axios from "axios";
+// import CityView from "./CityView.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const previewCity = (searchResult) => {
+  // console.log(searchResult);
+  const [city, state] = searchResult.place_name.split(",");
+  // console.log(city, state);
+  router.push({
+    name: 'cityview',
+    params: { state: state.replaceAll(" ", ""), city: city.replaceAll(" ", "") },
+    query: {
+      lat: searchResult.geometry.coordinates[1],
+      lon: searchResult.geometry.coordinates[1]
+    }
+  })
+}
 
 const mapboxAPIkey = "pk.eyJ1IjoiY2hvbmNob2w1NyIsImEiOiJjbG4ydGVrbHkwYmhkMmxua2x1bXo0MWJ0In0.OPa82SJRaq4aLQ63Ke2KQw";
 const searchQuery = ref("");
