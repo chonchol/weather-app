@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: url(../assets/images/Background.svg);
+  color: white;
+}
+#app {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  padding: 10px;
+  font-weight: normal;
+}
+
+input {
+  width: 100%;
+}
+.detail-area {
+  background: url(../assets/images/Background-left.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 80vh;
+}
+
+.icon-container {
+  position: absolute;
+  width: 20px;
+  right: 13px;
+  top: calc(50% - 10px);
+  animation: rotation 5.4s infinite linear;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.suggestions {
+  background: #3b3b54;
+  color: white;
+  border-radius: 5px;
+  min-width: 600px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 7px;
+}
+
+.suggestion {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #16161f;
+}
+
+.suggestion:hover {
+  background: #35354a;
+  color: #fff;
+}
