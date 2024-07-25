@@ -16,23 +16,26 @@ export default {
     }
   },
 
-  watch: {
-    location: 'getForecast'
-  },
-  created() {
-    this.getForecast()
-  },
+  // watch: {
+  //   name() {
+  //     console.log('hwllo')
+  //   }
+  // },
+  // created() {
+  //   this.getForecast()
+  // },
 
   methods: {
     async getForecast() {
       const apiKey = 'd1e73c9d8c8e4079bd784955242406'
       console.log(this.weatherData)
-      if (this.$route.name === 'WeatherDashboard') {
-        console.log('WeatherDashboard')
-      } else {
-        console.log('HomePage')
-      }
-      const url = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${this.weatherData}&days=5`
+      console.log(this.props)
+      // if (this.$route.name === 'WeatherDashboard') {
+      //   console.log('WeatherDashboard')
+      // } else {
+      //   console.log('HomePage')
+      // }
+      const url = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${this.weatherData}&days=3`
       try {
         const response = await axios.get(url)
 
@@ -44,6 +47,7 @@ export default {
         this.country = locationData.country
         this.localtime = locationData.localtime
         this.conditionText = currentData.condition.text
+        this.conditionWindDeg = currentData.wind_degree
         this.conditionImg = currentData.condition.icon
         this.conditionTemp = currentData.temp_c
         this.conditionTempFeel = currentData.feelslike_c
@@ -58,7 +62,7 @@ export default {
         this.forecastMax = forecastData.forecastday['0'].day.maxtemp_c
         this.forecastMin = forecastData.forecastday['0'].day.mintemp_c
 
-        // console.log(response.data)
+        console.log(response.data)
       } catch (error) {
         console.error(error)
       }
@@ -71,8 +75,8 @@ export default {
 </script>
 
 <template>
-  <div class="dashboard flex">
-    <div class="left-dash mr-10 w-2/5">
+  <div class="dashboard p-3 flex flex-col md:flex-row">
+    <div class="left-dash mr-10 md:w-2/5 w-full">
       <div class="form-area bg-gray-800 flex justify-center items-normal py-6 px-1">
         <RouterLink to="/"
           ><img src="../assets/images/Logo-s.svg" alt="" class="bg-gray-600 rounded p-2 mr-4"
@@ -100,15 +104,15 @@ export default {
         </div>
       </div>
     </div>
-    <div class="right-dash w-3/5">
+    <div class="right-dash md:w-3/5 w-full">
       <div class="top-section bg-gray-800 rounded p-6">
         <p class="text-gray-400 text-2xl mb-4">Climate details</p>
         <div class="flex justify-between items-center py-4">
           <div class="flex justify-between items-center">
             <img src="../assets/images/temparature.svg" alt="" />
-            <p class="ml-3 text-gray-200 font-medium">Thermal Sensation</p>
+            <p class="ml-3 text-gray-200 font-medium">Wind Degree</p>
           </div>
-          <p class="text-gray-100 text-2xl font-medium">26ºc</p>
+          <p class="text-gray-100 text-2xl font-medium">{{ conditionWindDeg }}</p>
         </div>
         <hr class="text-hrline" />
         <div class="flex justify-between items-center py-4">
@@ -146,7 +150,7 @@ export default {
       <div class="bottom-section bg-gray-800 rounded p-6 mt-6">
         <p class="text-gray-400 text-2xl mb-4">3 day forecast</p>
         <div class="flex justify-between">
-          <div class="flex flex-col items-center" v-for="forecastday in fDatas">
+          <div class="flex flex-col items-center text-center" v-for="forecastday in fDatas">
             <p class="text-gray-200 font-medium">{{ forecastday.date }}</p>
             <img :src="forecastday.day.condition.icon" alt="" />
             <p class="text-gray-200">{{ forecastday.day.condition.text }}</p>

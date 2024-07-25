@@ -9,6 +9,15 @@ export default {
     }
   },
 
+  // watch: {
+  //   location() {
+  //     console.log('hello')
+  //     // this.fetchSuggestions()
+  //     // this.selectSuggestion()
+  //     this.getWeather()
+  //   }
+  // },
+
   methods: {
     async fetchSuggestions() {
       const apKey = 'd1e73c9d8c8e4079bd784955242406'
@@ -40,7 +49,7 @@ export default {
           name: 'WeatherDashboard',
           params: { weatherData: response.data.location.name }
         })
-        console.log(this.$route.path)
+        // console.log(this.$route.path)
       } catch (error) {
         console.error(error)
       }
@@ -86,5 +95,10 @@ input {
 }
 .suggestions {
   min-width: auto;
+}
+@media only screen and (max-width: 640px) {
+  input {
+    width: 335px;
+  }
 }
 </style>
