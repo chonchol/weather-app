@@ -35,7 +35,7 @@ export default {
       const apiKey = 'd1e73c9d8c8e4079bd784955242406'
       this.weatherInfo = newData
 
-      const url = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${this.weatherInfo}&days=3`
+      const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${this.weatherInfo}&days=3`
 
       try {
         const response = await axios.get(url)

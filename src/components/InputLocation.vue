@@ -14,7 +14,7 @@ export default {
       const apKey = 'd1e73c9d8c8e4079bd784955242406'
       if (this.location.length > 2) {
         const response = await axios.get(
-          `http://api.weatherapi.com/v1/search.json?key=${apKey}&q=${this.location}`
+          `https://api.weatherapi.com/v1/search.json?key=${apKey}&q=${this.location}`
         )
         this.suggestions = response.data.map((loc) => `${loc.name}, ${loc.region} - ${loc.country}`)
       } else {
@@ -32,7 +32,7 @@ export default {
     },
     async getWeather() {
       const apiKey = 'd1e73c9d8c8e4079bd784955242406'
-      const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${this.location}`
+      const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${this.location}`
 
       try {
         const response = await axios.get(url)
