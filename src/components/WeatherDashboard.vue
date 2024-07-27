@@ -12,30 +12,31 @@ export default {
     return {
       name: '',
       country: '',
-      localtime: ''
+      localtime: '',
+      weatherInfo: this.weatherData
     }
   },
 
-  // watch: {
-  //   name() {
-  //     console.log('hwllo')
-  //   }
-  // },
-  // created() {
-  //   this.getForecast()
-  // },
+  watch: {
+    weatherInfo(newVal, oldVal) {
+      if (newVal == null) {
+        newVal = oldVal
+      }
+      return newVal
+    }
+  },
 
   methods: {
-    async getForecast() {
+    async getForecast(newData) {
+      if (newData == null) {
+        newData = this.weatherData
+      }
+
       const apiKey = 'd1e73c9d8c8e4079bd784955242406'
-      console.log(this.weatherData)
-      console.log(this.props)
-      // if (this.$route.name === 'WeatherDashboard') {
-      //   console.log('WeatherDashboard')
-      // } else {
-      //   console.log('HomePage')
-      // }
-      const url = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${this.weatherData}&days=3`
+      this.weatherInfo = newData
+
+      const url = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${this.weatherInfo}&days=3`
+
       try {
         const response = await axios.get(url)
 
@@ -61,8 +62,6 @@ export default {
 
         this.forecastMax = forecastData.forecastday['0'].day.maxtemp_c
         this.forecastMin = forecastData.forecastday['0'].day.mintemp_c
-
-        console.log(response.data)
       } catch (error) {
         console.error(error)
       }
@@ -77,11 +76,11 @@ export default {
 <template>
   <div class="dashboard p-3 flex flex-col md:flex-row">
     <div class="left-dash mr-10 md:w-2/5 w-full">
-      <div class="form-area bg-gray-800 flex justify-center items-normal py-6 px-1">
+      <div class="form-area bg-gray-800 flex items-normal py-6 px-1">
         <RouterLink to="/"
           ><img src="../assets/images/Logo-s.svg" alt="" class="bg-gray-600 rounded p-2 mr-4"
         /></RouterLink>
-        <InputLocation />
+        <InputLocation @update:data="getForecast" />
       </div>
       <div class="detail-area flex flex-col justify-between rounded">
         <div class="top-detail flex justify-between items-center">
@@ -165,8 +164,13 @@ export default {
   </div>
 </template>
 
-<style>
-input {
+<style scoped>
+/deep/ input {
   width: 450px;
+}
+@media only screen and (max-width: 640px) {
+  /deep/ input {
+    width: 295px;
+  }
 }
 </style>

@@ -12,9 +12,6 @@ body {
   font-weight: normal;
 }
 
-input {
-  width: 100%;
-}
 .detail-area {
   background: url(../assets/images/Background-left.svg);
   background-repeat: no-repeat;

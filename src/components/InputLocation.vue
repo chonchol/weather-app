@@ -9,15 +9,6 @@ export default {
     }
   },
 
-  // watch: {
-  //   location() {
-  //     console.log('hello')
-  //     // this.fetchSuggestions()
-  //     // this.selectSuggestion()
-  //     this.getWeather()
-  //   }
-  // },
-
   methods: {
     async fetchSuggestions() {
       const apKey = 'd1e73c9d8c8e4079bd784955242406'
@@ -36,6 +27,7 @@ export default {
 
       setTimeout(async () => {
         await this.getWeather()
+        this.location = ''
       }, 2000)
     },
     async getWeather() {
@@ -44,12 +36,12 @@ export default {
 
       try {
         const response = await axios.get(url)
-        // console.log(this.$route.path)
+
+        this.$emit('update:data', response.data.location.name)
         this.$router.push({
           name: 'WeatherDashboard',
           params: { weatherData: response.data.location.name }
         })
-        // console.log(this.$route.path)
       } catch (error) {
         console.error(error)
       }
@@ -91,14 +83,14 @@ export default {
 
 <style scoped>
 input {
-  width: 470px;
+  width: 600px;
 }
 .suggestions {
   min-width: auto;
 }
 @media only screen and (max-width: 640px) {
   input {
-    width: 335px;
+    width: 295px;
   }
 }
 </style>
